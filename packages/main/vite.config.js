@@ -26,7 +26,7 @@ const config = {
     assetsDir: '.',
     minify: process.env.MODE !== 'development',
     lib: {
-      entry: 'src/index.ts',
+      entry: ['src/index.ts', 'src/extensionHost.ts'],
       formats: ['cjs'],
     },
     rollupOptions: {
