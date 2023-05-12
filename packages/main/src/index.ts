@@ -2,7 +2,7 @@ import { app } from "electron";
 import "./security-restrictions";
 import { restoreOrCreateWindow } from "/@/mainWindow";
 import { platform } from "node:process";
-import { createScriptProcess } from "./scriptProcess";
+import { createExtensionProcess } from "./extensionProcess";
 
 /**
  * Prevent electron from running multiple instances.
@@ -39,7 +39,7 @@ app.on("activate", restoreOrCreateWindow);
 app
   .whenReady()
   .then(restoreOrCreateWindow)
-  .then(() => createScriptProcess("foo/bar/baz", { debug: true }))
+  .then(() => createExtensionProcess("foo/bar/baz", { debug: true }))
   .catch((e) => console.error("Failed create window:", e));
 
 /**

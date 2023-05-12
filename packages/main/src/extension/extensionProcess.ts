@@ -1,10 +1,10 @@
 import { BrowserWindow, app, utilityProcess } from "electron";
 import * as path from "path";
-import { MAIN_ROOT } from "./constants";
+import { MAIN_ROOT } from "../constants";
 import getPort from "get-port";
 import log from "electron-log";
 
-export async function createScriptProcess(
+export async function createExtensionProcess(
   filePath: string,
   options?: { args?: string[]; debug?: boolean }
 ) {
