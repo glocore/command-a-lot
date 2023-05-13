@@ -6,8 +6,6 @@ import {
 import { useEffect, useMemo, useState } from "react";
 
 const App = () => {
-  console.log(window.versions);
-
   const receiver = useMemo(() => createRemoteReceiver(), []);
   const controller = useMemo(() => createController({ Button }), []);
 
@@ -16,7 +14,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       console.log("effect is running");
-      window.createEndpointForReceiver(receiver);
+      electronApi.createEndpointForReceiver(receiver);
       forceRender((v) => v + 1);
     }, 1000);
   }, [receiver]);
@@ -31,5 +29,5 @@ const App = () => {
 export default App;
 
 const Button = (props: { onClick: () => void; children: string }) => {
-  return <button onClick={() => props.onClick()} children={props.children} />;
+  return <button onClick={() => props.onClick()}>{props.children}</button>;
 };

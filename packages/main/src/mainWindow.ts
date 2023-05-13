@@ -6,8 +6,8 @@ async function createWindow() {
   const browserWindow = new BrowserWindow({
     show: false, // Use the 'ready-to-show' event to show the instantiated BrowserWindow.
     webPreferences: {
+      /** remote-ui doesn't work without this. */
       contextIsolation: false,
-      sandbox: true, // Sandbox disabled because the demo of preload script depend on the Node.js api
       preload: join(app.getAppPath(), "packages/preload/dist/index.cjs"),
     },
   });
