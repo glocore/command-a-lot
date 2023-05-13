@@ -10,3 +10,5 @@ yarn dev
 ```sh
 yarn compile
 ```
+
+Template used: [vite-electron-builder](https://github.com/cawa-93/vite-electron-builder)

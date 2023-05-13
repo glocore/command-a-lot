@@ -13,7 +13,6 @@ const App = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("effect is running");
       electronApi.createEndpointForReceiver(receiver);
       forceRender((v) => v + 1);
     }, 1000);
