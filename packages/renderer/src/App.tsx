@@ -4,17 +4,15 @@ import {
   createRemoteReceiver,
 } from "@remote-ui/react/host";
 import { useEffect, useMemo, useState } from "react";
+import { ButtonProps } from "#remote-components";
 
 const App = () => {
   const receiver = useMemo(() => createRemoteReceiver(), []);
   const controller = useMemo(() => createController({ Button }), []);
 
-  const [, forceRender] = useState(0);
-
   useEffect(() => {
     setTimeout(() => {
       electronApi.createEndpointForReceiver(receiver);
-      forceRender((v) => v + 1);
     }, 1000);
   }, [receiver]);
 
@@ -27,6 +25,6 @@ const App = () => {
 };
 export default App;
 
-const Button = (props: { onClick: () => void; children: string }) => {
-  return <button onClick={() => props.onClick()}>{props.children}</button>;
+const Button = (props: ButtonProps) => {
+  return <button onClick={() => props.onClick?.()}>{props.children}</button>;
 };

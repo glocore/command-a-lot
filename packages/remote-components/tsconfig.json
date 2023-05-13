@@ -13,7 +13,6 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "#remote-components": ["../remote-components/src/index"],
       "/@/*": ["./src/*"]
     },
     "lib": ["ESNext", "dom", "dom.iterable"]

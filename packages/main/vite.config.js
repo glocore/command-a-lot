@@ -16,6 +16,8 @@ const config = {
   resolve: {
     alias: {
       "/@/": join(PACKAGE_ROOT, "src") + "/",
+      "#remote-components":
+        join(PROJECT_ROOT, "packages", "remote-components", "src") + "/",
     },
   },
   build: {

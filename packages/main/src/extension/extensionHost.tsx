@@ -1,18 +1,8 @@
-import {
-  createRemoteRoot,
-  createRoot,
-  RemoteRoot,
-  createRemoteReactComponent,
-} from "@remote-ui/react";
+import { createRemoteRoot, createRoot, RemoteRoot } from "@remote-ui/react";
 import { createEndpoint, retain } from "@remote-ui/rpc";
 import type { MessagePortMain } from "electron";
 import { useState } from "react";
-
-interface ButtonProps {
-  onClick?(): void;
-}
-
-const Button = createRemoteReactComponent<"Button", ButtonProps>("Button");
+import { Button } from "#remote-components";
 
 declare global {
   var extPort: MessagePortMain | undefined;
@@ -71,7 +61,7 @@ function RemoteWidget() {
 
   return (
     <Button onClick={() => setClickCount((c) => c + 1)}>
-      Click count: {clickCount}
+      {`Click count: ${clickCount}`}
     </Button>
   );
 }
