@@ -1,6 +1,7 @@
 /**
  * @module preload
  */
+import { createEndpointForReceiver } from "./extensionBridge";
 
-export {sha256sum} from './nodeCrypto';
-export {versions} from './versions';
+// @ts-ignore
+window.createEndpointForReceiver = createEndpointForReceiver;

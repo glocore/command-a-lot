@@ -8,6 +8,7 @@
     "strict": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "types": ["node"],
     "baseUrl": ".",
@@ -15,6 +16,11 @@
       "/@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "../../types/**/*.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "types/**/*.d.ts",
+    "../../types/**/*.d.ts"
+  ],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

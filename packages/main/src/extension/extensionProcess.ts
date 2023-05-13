@@ -28,6 +28,10 @@ export async function createExtensionProcess(
       devToolsWindow?.close();
     });
 
+    child.stderr?.on("data", (data) => {
+      console.log(data?.toString());
+    });
+
     child.stderr?.once("data", async (data) => {
       log.info(data?.toString());
       const [debugUrl] = data.toString().match(/(?<=ws:\/\/).*/g) || [""];
@@ -56,10 +60,10 @@ function createDevToolsWindow(devToolsUrl: string) {
 
     win.on("close", () => {
       inspectorCount--;
-      if (!inspectorCount) app.dock.hide();
+      // if (!inspectorCount) app.dock.hide();
     });
 
-    app.dock.show();
+    // app.dock.show();
 
     return win;
   } catch (error) {

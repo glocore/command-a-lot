@@ -15,23 +15,23 @@ const config = {
   envDir: PROJECT_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      "/@/": join(PACKAGE_ROOT, "src") + "/",
     },
   },
   build: {
     ssr: true,
-    sourcemap: 'inline',
+    sourcemap: "inline",
     target: `node${node}`,
-    outDir: 'dist',
-    assetsDir: '.',
-    minify: process.env.MODE !== 'development',
+    outDir: "dist",
+    assetsDir: ".",
+    minify: process.env.MODE !== "development",
     lib: {
-      entry: ['src/index.ts', 'src/extensionHost.ts'],
-      formats: ['cjs'],
+      entry: ["src/index.ts", "src/extension/extensionHost.tsx"],
+      formats: ["cjs"],
     },
     rollupOptions: {
       output: {
-        entryFileNames: '[name].cjs',
+        entryFileNames: "[name].cjs",
       },
     },
     emptyOutDir: true,

@@ -14,20 +14,24 @@ const config = {
   mode: process.env.MODE,
   root: PACKAGE_ROOT,
   envDir: PROJECT_ROOT,
+  ssr: {
+    external: ["electron"],
+    noExternal: true,
+  },
   build: {
     ssr: true,
-    sourcemap: 'inline',
+    sourcemap: "inline",
     target: `chrome${chrome}`,
-    outDir: 'dist',
-    assetsDir: '.',
-    minify: process.env.MODE !== 'development',
+    outDir: "dist",
+    assetsDir: ".",
+    minify: process.env.MODE !== "development",
     lib: {
-      entry: 'src/index.ts',
-      formats: ['cjs'],
+      entry: "src/index.ts",
+      formats: ["cjs"],
     },
     rollupOptions: {
       output: {
-        entryFileNames: '[name].cjs',
+        entryFileNames: "[name].cjs",
       },
     },
     emptyOutDir: true,
