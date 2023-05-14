@@ -5,6 +5,8 @@ import { createExtensionProcess } from "./extension/extensionProcess";
 async function createWindow() {
   const browserWindow = new BrowserWindow({
     show: false, // Use the 'ready-to-show' event to show the instantiated BrowserWindow.
+    vibrancy: "hud",
+    frame: false,
     webPreferences: {
       /** remote-ui doesn't work without this. */
       contextIsolation: false,
@@ -24,7 +26,7 @@ async function createWindow() {
     browserWindow?.show();
 
     if (import.meta.env.DEV) {
-      browserWindow?.webContents.openDevTools();
+      // browserWindow?.webContents.openDevTools();
     }
   });
 
