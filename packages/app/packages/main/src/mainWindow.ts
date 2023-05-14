@@ -50,7 +50,7 @@ async function createWindow() {
      * @see https://github.com/electron/electron/issues/6869
      */
     await browserWindow.loadFile(
-      resolve(__dirname, "../../renderer/dist/index.html")
+      resolve(__dirname, "../../ui/dist/index.html")
     );
   }
 

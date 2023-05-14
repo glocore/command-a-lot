@@ -6,4 +6,8 @@ import path from "path";
  */
 export const MAIN_ROOT = __dirname;
 
-export const PROJECT_ROOT = path.join(__dirname, "..", "..", "..");
+/** Workspace root */
+export const APP_ROOT = path.join(MAIN_ROOT, "..", "..");
+
+/** Monorepo root */
+export const PROJECT_ROOT = path.join(APP_ROOT, "..", "..");

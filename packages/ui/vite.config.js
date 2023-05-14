@@ -1,13 +1,12 @@
 /* eslint-env node */
 
-import {chrome} from '../../.electron-vendors.cache.json';
-import react from '@vitejs/plugin-react';
-import {renderer} from 'unplugin-auto-expose';
-import {join} from 'node:path';
-import {injectAppVersion} from '../../version/inject-app-version-plugin.mjs';
+import { chrome } from "../app/.electron-vendors.cache.json";
+import react from "@vitejs/plugin-react";
+import { join } from "node:path";
+import { injectAppVersion } from "../app/version/inject-app-version-plugin.mjs";
 
 const PACKAGE_ROOT = __dirname;
-const PROJECT_ROOT = join(PACKAGE_ROOT, '../..');
+const PROJECT_ROOT = join(PACKAGE_ROOT, "../..");
 
 /**
  * @type {import('vite').UserConfig}
@@ -20,8 +19,6 @@ const config = {
   resolve: {
     alias: {
       "/@/": join(PACKAGE_ROOT, "src") + "/",
-      "#remote-components":
-        join(PROJECT_ROOT, "packages", "remote-components", "src") + "/",
     },
   },
   base: "",
@@ -44,13 +41,7 @@ const config = {
   test: {
     environment: "happy-dom",
   },
-  plugins: [
-    react(),
-    renderer.vite({
-      preloadEntry: join(PACKAGE_ROOT, "../preload/src/index.ts"),
-    }),
-    injectAppVersion(),
-  ],
+  plugins: [react(), injectAppVersion()],
 };
 
 export default config;

@@ -4,7 +4,7 @@ import {
   createRemoteReceiver,
 } from "@remote-ui/react/host";
 import { useEffect, useMemo, useState } from "react";
-import { ButtonProps } from "#remote-components";
+import { ButtonProps } from "remote-components";
 
 const App = () => {
   const receiver = useMemo(() => createRemoteReceiver(), []);

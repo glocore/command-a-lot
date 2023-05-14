@@ -2,7 +2,7 @@ import { createRemoteRoot, createRoot, RemoteRoot } from "@remote-ui/react";
 import { createEndpoint, retain } from "@remote-ui/rpc";
 import type { MessagePortMain } from "electron";
 import { useState } from "react";
-import { Button } from "#remote-components";
+import { Button } from "remote-components";
 
 declare global {
   var extPort: MessagePortMain | undefined;

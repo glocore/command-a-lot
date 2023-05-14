@@ -13,8 +13,7 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "/@/*": ["./src/*"],
-      "#remote-components": ["../remote-components/src/index"]
+      "/@/*": ["./src/*"]
     }
   },
   "include": [
