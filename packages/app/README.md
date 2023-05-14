@@ -1,14 +1,11 @@
-# command-a-lot
+# app
+
+Electron app
 
 ### Run app locally
 ```sh
-yarn install
 yarn dev
 ```
 
-### Build
-```sh
-yarn compile
-```
 
-Template used: [vite-electron-builder](https://github.com/cawa-93/vite-electron-builder)
+Template: [vite-electron-builder](https://github.com/cawa-93/vite-electron-builder)
