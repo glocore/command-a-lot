@@ -3,7 +3,7 @@ import {
   createController,
   createRemoteReceiver,
 } from "@remote-ui/react/host";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { ButtonProps } from "remote-components";
 
 const App = () => {
@@ -17,10 +17,14 @@ const App = () => {
   }, [receiver]);
 
   return (
-    <>
+    <div className="text-white">
+      <input
+        placeholder="Command-a-lot"
+        className="w-full text-white placeholder:text-gray-500 bg-transparent border-b border-gray-700 px-4 py-3 text-lg outline-none"
+      />
       <p>hello from react</p>
       <RemoteRenderer receiver={receiver} controller={controller} />
-    </>
+    </div>
   );
 };
 export default App;

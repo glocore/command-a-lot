@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  -webkit-app-region: drag;
+  height: 100vh;
+  background-color: rgba(30, 30, 30, 0.5);
+}
+
+/* interactive HTML elements */
+button, input, select, a, details, textarea {
+  -webkit-app-region: no-drag;
+}
+
+.enable-window-drag {
+  -webkit-app-region: drag;
+}
+
+.disable-window-drag {
+  -webkit-app-region: no-drag;
+}
