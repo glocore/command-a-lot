@@ -1,14 +1,28 @@
 import { app, BrowserWindow, MessageChannelMain } from "electron";
 import { join, resolve } from "node:path";
 import { createExtensionProcess } from "./extension/extensionProcess";
+import { activateIpcHandlers } from "./ipc/handlers";
 
-async function createWindow() {
+export let mainWindow: BrowserWindow | undefined;
+
+async function createMainWindow() {
   const browserWindow = new BrowserWindow({
     show: false, // Use the 'ready-to-show' event to show the instantiated BrowserWindow.
     vibrancy: "hud",
     frame: false,
     webPreferences: {
-      /** remote-ui doesn't work without this. */
+      /**
+       * TLDR: We need to disable context isolation to make `remote-ui` work.
+       *
+       * Explanation: `remote-ui` communicates with the remote environment via a
+       * MessagePort, which is only accessible in the preload script's realm.
+       * remote-ui's host environment in the renderer needs to pass messages via
+       * this MessagePort. When context isolation is enabled, objects are cloned
+       * while crossing the context bridge and lose their references in the
+       * process. We're currently not executed untrusted/remote code in the
+       * renderer, and so this is an okay tradeoff until we figure out a way to
+       * make this work.
+       */
       contextIsolation: false,
       preload: join(app.getAppPath(), "packages/preload/dist/index.cjs"),
     },
@@ -26,7 +40,7 @@ async function createWindow() {
     browserWindow?.show();
 
     if (import.meta.env.DEV) {
-      // browserWindow?.webContents.openDevTools();
+      browserWindow?.webContents.openDevTools({ mode: "undocked" });
     }
   });
 
@@ -63,20 +77,19 @@ async function createWindow() {
  * Restore an existing BrowserWindow or Create a new BrowserWindow.
  */
 export async function restoreOrCreateWindow() {
-  let window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
-
-  if (window === undefined) {
-    window = await createWindow();
+  if (mainWindow === undefined) {
+    activateIpcHandlers();
+    mainWindow = await createMainWindow();
   }
 
-  if (window.isMinimized()) {
-    window.restore();
+  if (mainWindow.isMinimized()) {
+    mainWindow.restore();
   }
 
-  window.focus();
+  mainWindow.focus();
 
   const { port1, port2 } = new MessageChannelMain();
   const extensionProcess = await createExtensionProcess("foo/bar/baz");
   extensionProcess?.postMessage("port", [port2]);
-  window.webContents.postMessage("port", undefined, [port1]);
+  mainWindow.webContents.postMessage("port", undefined, [port1]);
 }
