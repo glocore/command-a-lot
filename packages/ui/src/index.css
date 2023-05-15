@@ -11,6 +11,7 @@ body {
 /* interactive HTML elements */
 button, input, select, a, details, textarea {
   -webkit-app-region: no-drag;
+  cursor: default;
 }
 
 .enable-window-drag {
