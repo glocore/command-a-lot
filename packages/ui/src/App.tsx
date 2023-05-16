@@ -45,9 +45,9 @@ function Footer() {
 
       <div>
         <button
-          className={`text-sm font-medium rounded-md outline-none px-2 py-1 ${
+          className={`text-sm font-semibold rounded-md outline-none px-2 py-1 ${
             isWindowFocused ? "text-neutral-400" : "text-neutral-500"
-          } active:text-white hover:bg-neutral-700 active:bg-neutral-600`}
+          } active:text-neutral-300 hover:bg-neutral-700 active:bg-neutral-600`}
         >
           <span className="pr-2">Actions</span>
           <span className="p-1">⌘</span>
