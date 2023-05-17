@@ -45,13 +45,17 @@ function Footer() {
 
       <div>
         <button
-          className={`text-sm font-semibold rounded-md outline-none px-2 py-1 ${
+          className={`text-sm font-semibold rounded-md outline-none px-2 py-0.5 pr-0.5 ${
             isWindowFocused ? "text-neutral-400" : "text-neutral-500"
-          } active:text-neutral-300 hover:bg-neutral-700 active:bg-neutral-600`}
+          } active:text-neutral-300 hover:bg-neutral-700 active:bg-neutral-600 transition-colors duration-75`}
         >
           <span className="pr-2">Actions</span>
-          <span className="p-1">⌘</span>
-          <span className="p-1">K</span>
+          <kbd className="font-sans bg-neutral-700 rounded inline-block w-6 h-6 leading-6 mr-0.5">
+            ⌘
+          </kbd>
+          <kbd className="font-sans bg-neutral-700 rounded inline-block w-6 h-6 leading-6">
+            K
+          </kbd>
         </button>
       </div>
     </div>
