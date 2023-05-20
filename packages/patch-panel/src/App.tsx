@@ -1,52 +1,86 @@
 import { useCallback } from "react";
 import ReactFlow, {
-  MiniMap,
-  Controls,
-  Background,
-  useNodesState,
-  useEdgesState,
-  addEdge,
+  Edge,
+  Node,
+  NodeTypes,
   OnConnect,
-  BackgroundVariant,
+  addEdge,
+  useEdgesState,
+  useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-const initialNodes = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
-];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+import { Node as DefaultNode } from "./components/Node";
 
-export default function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+const rfStyle = {
+  backgroundColor: "#B8CEFF",
+};
+
+const initialNodes = [
+  {
+    id: "node-1",
+    type: "textUpdater",
+    position: { x: 0, y: 0 },
+    data: { value: 123 },
+  },
+  {
+    id: "node-2",
+    type: "output",
+    targetPosition: "top",
+    position: { x: 0, y: 500 },
+    data: { label: "node 2" },
+  },
+  {
+    id: "node-3",
+    type: "output",
+    targetPosition: "top",
+    position: { x: 200, y: 500 },
+    data: { label: "node 3" },
+  },
+] as Node[];
+
+const initialEdges = [
+  {
+    id: "edge-1",
+    source: "node-1",
+    target: "node-2",
+    sourceHandle: "a",
+  },
+  {
+    id: "edge-2",
+    source: "node-1",
+    target: "node-3",
+    sourceHandle: "b",
+  },
+] as Edge[];
+
+const nodeTypes: NodeTypes = { textUpdater: DefaultNode };
+
+function Flow() {
+  const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback<OnConnect>(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (connection) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges]
   );
 
   return (
     <div className="w-screen h-screen">
-      <div style={{ width: "100%", height: "100%" }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          fitView
-          panOnScroll
-        >
-          <Controls />
-          <Background
-            variant={BackgroundVariant.Dots}
-            gap={12}
-            size={2}
-            color="#ddd"
-          />
-        </ReactFlow>
-      </div>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        fitView
+        style={rfStyle}
+        panOnScroll
+        // defaultEdgeOptions={{ type: "smoothstep" }}
+      />
     </div>
   );
 }
+
+export default Flow;
