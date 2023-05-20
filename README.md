@@ -17,5 +17,6 @@ yarn compile
 
 ## Project Navigation
 - `packages/app`: Electron app
-- `packages/ui`: React web app, ie., GUI for the Electron app
+- `packages/ui`: GUI for the Electron app
+- `packages/patch-panel`: Workflow builder UI
 - `packages/remote-components`: React components used to build extensions.

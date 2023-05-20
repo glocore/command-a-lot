@@ -1,4 +1,4 @@
-import { assert, describe, expect, it, test, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Workflow, runWorkflow } from "./workflow";
 
 describe("runWorkflow", () => {
