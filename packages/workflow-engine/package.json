@@ -1,0 +1,13 @@
+{
+  "name": "workflow-engine",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^0.31.1"
+  },
+  "dependencies": {}
+}
