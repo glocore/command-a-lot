@@ -12,7 +12,7 @@ describe("Runtime", () => {
         {
           id: "1",
           name: "1",
-          task: "to-upper-case",
+          type: "to-upper-case-task",
           props: {
             text: "hello world",
           },
@@ -21,14 +21,14 @@ describe("Runtime", () => {
         {
           id: "2",
           name: "2",
-          task: "append-exclamation",
+          type: "append-exclamation-task",
         },
       ],
     };
 
     const tasks = new Map<string, Task>();
-    tasks.set("to-upper-case", new ToUpperCaseTask());
-    tasks.set("append-exclamation", new AppendExclamationTask());
+    tasks.set("to-upper-case-task", new ToUpperCaseTask());
+    tasks.set("append-exclamation-task", new AppendExclamationTask());
 
     const workflow = new Workflow(workflowJson);
     const context = { variables: {} };
@@ -52,13 +52,13 @@ describe("Runtime", () => {
         {
           id: "1",
           name: "1",
-          task: "add-two",
+          type: "add-two-task",
         },
       ],
     };
 
     const tasks = new Map<string, Task>();
-    tasks.set("add-two", new AddTwoTask());
+    tasks.set("add-two-task", new AddTwoTask());
 
     const workflow = new Workflow(workflowJson);
     const context = { variables: { number: 1 } };

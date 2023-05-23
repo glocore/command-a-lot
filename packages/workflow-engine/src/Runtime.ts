@@ -49,7 +49,7 @@ export class Runtime extends EventEmitter {
     message?: TaskMessage;
   }) {
     this.state[node.id] = { status: STATUS.RUNNING };
-    const task = this.tasks.get(node.task);
+    const task = this.tasks.get(node.type);
 
     const handleError = (error: unknown) => {
       this.state[node.id] = { status: STATUS.ERROR };
@@ -57,7 +57,7 @@ export class Runtime extends EventEmitter {
     };
 
     if (!task) {
-      const error = Error(`Could not find task ${node.task}`);
+      const error = Error(`Could not find task ${node.type}`);
       handleError(error);
       throw error;
     }

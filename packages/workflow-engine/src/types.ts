@@ -7,7 +7,7 @@ export type WorkflowContext = {
 export type WorkflowNode = {
   id: string;
   name: string;
-  task: string;
+  type: string;
   next?: WorkflowNode["id"];
   props?: Record<string, any>;
 };
