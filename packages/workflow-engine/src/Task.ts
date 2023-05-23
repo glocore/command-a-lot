@@ -1,4 +1,5 @@
-import { TaskMessage, WorkflowContext, WorkflowNode } from "./types";
+import { Context } from "./Context";
+import { TaskMessage, WorkflowNode } from "./types";
 
 export abstract class Task {
   async run({
@@ -8,7 +9,7 @@ export abstract class Task {
   }: {
     node: WorkflowNode;
     message: TaskMessage;
-    context: WorkflowContext;
+    context: Context;
   }): Promise<TaskMessage> {
     return {};
   }

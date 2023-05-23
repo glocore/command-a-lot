@@ -3,6 +3,7 @@ import { Task } from "./Task";
 import { TaskMessage, WorkflowJson, WorkflowNode } from "./types";
 import { Workflow } from "./Workflow";
 import { Runtime } from "./Runtime";
+import { Context } from "./Context";
 
 describe("Runtime", () => {
   it("runs a simple workflow", () => {
@@ -31,7 +32,7 @@ describe("Runtime", () => {
     tasks.set("append-exclamation-task", new AppendExclamationTask());
 
     const workflow = new Workflow(workflowJson);
-    const context = { variables: {} };
+    const context = new Context();
     const runtime = new Runtime({ workflow, tasks, context });
 
     const onStart = vi.fn();
@@ -48,6 +49,7 @@ describe("Runtime", () => {
   it("updates a variable", () => {
     const workflowJson: WorkflowJson = {
       name: "Add two",
+      variables: { number: 1 },
       nodes: [
         {
           id: "1",
@@ -61,7 +63,7 @@ describe("Runtime", () => {
     tasks.set("add-two-task", new AddTwoTask());
 
     const workflow = new Workflow(workflowJson);
-    const context = { variables: { number: 1 } };
+    const context = new Context({ variables: workflowJson.variables });
     const runtime = new Runtime({ workflow, tasks, context });
 
     runtime.on("end", () => {

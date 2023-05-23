@@ -1,7 +1,8 @@
 import { EventEmitter } from "events";
 import { Workflow } from "./Workflow";
 import { Task } from "./Task";
-import { WorkflowNode, TaskMessage, WorkflowContext } from "./types";
+import { WorkflowNode, TaskMessage } from "./types";
+import { Context } from "./Context";
 
 const STATUS = {
   RUNNING: "RUNNING",
@@ -14,7 +15,7 @@ type Tasks = Map<string, Task>;
 export class Runtime extends EventEmitter {
   private workflow: Workflow;
   private tasks: Tasks;
-  private context: WorkflowContext;
+  private context: Context;
   private state: Record<WorkflowNode["id"], { status: keyof typeof STATUS }> =
     {};
 
@@ -25,7 +26,7 @@ export class Runtime extends EventEmitter {
   }: {
     workflow: Workflow;
     tasks: Tasks;
-    context: WorkflowContext;
+    context: Context;
   }) {
     super();
 

@@ -1,8 +1,6 @@
 export type TaskMessage = Record<string, any>;
 
-export type WorkflowContext = {
-  variables: Record<string, string | number | boolean>;
-};
+export type WorkflowVariable = string | number | boolean;
 
 export type WorkflowNode = {
   id: string;
@@ -15,4 +13,5 @@ export type WorkflowNode = {
 export type WorkflowJson = {
   name: string;
   nodes: WorkflowNode[];
+  variables?: Record<string, WorkflowVariable>;
 };
