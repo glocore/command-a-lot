@@ -9,7 +9,7 @@ describe("Workflow", () => {
       {
         id: "1",
         name: "1",
-        type: "sample-task",
+        task: "sample-task",
       },
     ],
   };

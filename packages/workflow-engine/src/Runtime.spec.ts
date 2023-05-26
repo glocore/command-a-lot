@@ -13,8 +13,8 @@ describe("Runtime", () => {
         {
           id: "1",
           name: "1",
-          type: "to-upper-case-task",
-          props: {
+          task: "to-upper-case-task",
+          args: {
             text: "hello world",
           },
           next: "2",
@@ -22,7 +22,7 @@ describe("Runtime", () => {
         {
           id: "2",
           name: "2",
-          type: "append-exclamation-task",
+          task: "append-exclamation-task",
         },
       ],
     };
@@ -54,7 +54,7 @@ describe("Runtime", () => {
         {
           id: "1",
           name: "1",
-          type: "add-two-task",
+          task: "add-two-task",
         },
       ],
     };
@@ -75,31 +75,19 @@ describe("Runtime", () => {
 });
 
 class ToUpperCaseTask extends Task {
-  async run({
-    node,
-    message,
-  }: {
-    node: WorkflowNode;
-    message: TaskMessage;
-  }): Promise<TaskMessage> {
+  run: Task["run"] = async ({ node, message, context }) => {
     return {
       text: message.text.toUpperCase(),
     };
-  }
+  };
 }
 
 class AppendExclamationTask extends Task {
-  async run({
-    node,
-    message,
-  }: {
-    node: WorkflowNode;
-    message: TaskMessage;
-  }): Promise<TaskMessage> {
+  run: Task["run"] = async ({ node, message, context }) => {
     return {
       text: `${message.text}!`,
     };
-  }
+  };
 }
 
 class AddTwoTask extends Task {
