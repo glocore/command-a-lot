@@ -8,9 +8,11 @@ import { Context } from "./Context";
 describe("Runtime", () => {
   it("runs a simple workflow", () => {
     const workflowJson: WorkflowJson = {
+      version: 1.0,
       name: "Yell text",
       nodes: [
         {
+          kind: "task",
           id: "1",
           name: "1",
           task: "to-upper-case-task",
@@ -20,6 +22,7 @@ describe("Runtime", () => {
           next: "2",
         },
         {
+          kind: "task",
           id: "2",
           name: "2",
           task: "append-exclamation-task",
@@ -48,10 +51,12 @@ describe("Runtime", () => {
 
   it("updates a variable", () => {
     const workflowJson: WorkflowJson = {
+      version: 1.0,
       name: "Add two",
-      variables: { number: 1 },
+      variables: { $number: 1 },
       nodes: [
         {
+          kind: "task",
           id: "1",
           name: "1",
           task: "add-two-task",
@@ -67,7 +72,7 @@ describe("Runtime", () => {
     const runtime = new Runtime({ workflow, tasks, context });
 
     runtime.on("end", () => {
-      expect(context).toEqual({ variables: { number: 3 } });
+      expect(context).toEqual({ variables: { $number: 3 } });
     });
 
     runtime.start();
@@ -95,7 +100,7 @@ class AddTwoTask extends Task {
     if (typeof context.variables.number === "number") {
       context.variables.number += 2;
     }
-    
+
     return {};
   };
 }

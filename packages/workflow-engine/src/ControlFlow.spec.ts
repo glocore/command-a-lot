@@ -1,11 +1,11 @@
 import { describe, expect, it, test } from "vitest";
 import {
   ComparisonOperator,
-  ControlFlowNode,
+  ControlNode,
   Input,
   Operand,
   PresenceOperator,
-  Variable,
+  VariableName,
 } from "./types";
 import { ControlFlow } from "./ControlFlow";
 import { Context } from "./Context";
@@ -23,7 +23,8 @@ describe("ControlFlow", () => {
     op: ComparisonOperator;
     second: Operand;
   }[])(`evaluates the "$op" operator`, ({ first, op, second }) => {
-    const node: ControlFlowNode = {
+    const node: ControlNode = {
+      kind: "control",
       id: "controlFlowNode",
       name: "controlFlowNode",
       switch: [
@@ -47,10 +48,11 @@ describe("ControlFlow", () => {
     { first: "@input", op: "@present" },
     { first: "$my_var", op: "@absent" },
   ] as {
-    first: Variable | Input;
+    first: VariableName | Input;
     op: PresenceOperator;
   }[])(`evaluates the "$op" operator`, ({ first, op }) => {
-    const node: ControlFlowNode = {
+    const node: ControlNode = {
+      kind: "control",
       id: "controlFlowNode",
       name: "controlFlowNode",
       switch: [
@@ -71,7 +73,8 @@ describe("ControlFlow", () => {
   });
 
   it("throws if a default case is not provided", () => {
-    const node: ControlFlowNode = {
+    const node: ControlNode = {
+      kind: "control",
       id: "controlFlowNode",
       name: "controlFlowNode",
       switch: [{ case: [2, "<", 2], goto: "correct-node" }],

@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import { Workflow } from "./Workflow";
 import { Task } from "./Task";
-import { WorkflowNode, TaskMessage, TaskNode, ControlFlowNode } from "./types";
+import { WorkflowNode, TaskMessage, TaskNode, ControlNode } from "./types";
 import { Context } from "./Context";
 
 const STATUS = {
@@ -97,10 +97,7 @@ export class Runtime extends EventEmitter {
     }
   }
 
-  private async runControlFlowNode(
-    node: ControlFlowNode,
-    message: TaskMessage
-  ) {
+  private async runControlFlowNode(node: ControlNode, message: TaskMessage) {
     /**
      * Expressions
      * 1 < 2
@@ -116,6 +113,6 @@ function isTaskNode(node: WorkflowNode): node is TaskNode {
   return "task" in node;
 }
 
-function isControlFlowNode(node: WorkflowNode): node is ControlFlowNode {
+function isControlFlowNode(node: WorkflowNode): node is ControlNode {
   return "switch" in node;
 }

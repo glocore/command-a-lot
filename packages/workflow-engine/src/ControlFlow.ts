@@ -1,16 +1,16 @@
 import { Context } from "./Context";
 import {
-  ControlFlowNode,
+  ControlNode,
   Expression,
   Input,
   Operand,
   TaskMessage,
-  Variable,
+  VariableName,
   WorkflowNode,
 } from "./types";
 
 export class ControlFlow {
-  private node: ControlFlowNode;
+  private node: ControlNode;
   private message: TaskMessage;
   private context: Context;
 
@@ -19,7 +19,7 @@ export class ControlFlow {
     message,
     context,
   }: {
-    node: ControlFlowNode;
+    node: ControlNode;
     message: TaskMessage;
     context: Context;
   }) {
@@ -100,7 +100,7 @@ export class ControlFlow {
   }
 }
 
-function isVariable(s: unknown): s is Variable {
+function isVariable(s: unknown): s is VariableName {
   if (typeof s === "string") return s.startsWith("$");
   return false;
 }

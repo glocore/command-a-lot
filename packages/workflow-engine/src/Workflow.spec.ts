@@ -4,9 +4,11 @@ import { Workflow } from "./Workflow";
 
 describe("Workflow", () => {
   const workflowJson: WorkflowJson = {
+    version: 1.0,
     name: "Test Workflow",
     nodes: [
       {
+        kind: "task",
         id: "1",
         name: "1",
         task: "sample-task",

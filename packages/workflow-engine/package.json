@@ -9,5 +9,7 @@
   "devDependencies": {
     "vitest": "^0.31.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ajv": "^8.12.0"
+  }
 }

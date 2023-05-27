@@ -1,7 +1,5 @@
 export type TaskMessage = Record<string, any>;
 
-export type WorkflowVariable = string | number | boolean;
-
 export type BaseNode = {
   id: string;
   name: string;
@@ -9,11 +7,14 @@ export type BaseNode = {
 };
 
 export type TaskNode = BaseNode & {
+  kind: "task";
   task: string;
   next?: WorkflowNode["id"];
 };
 
-export type Variable = `$${string}`;
+export type VariableValue = string | number | boolean;
+
+export type VariableName = `$${string}`;
 
 export type Input = "@input";
 
@@ -21,7 +22,7 @@ export type ComparisonOperator = ">" | "<" | "==" | "!=" | "<=" | ">=";
 
 export type PresenceOperator = "@present" | "@absent";
 
-export type Operand = Variable | Input | number | string;
+export type Operand = VariableName | Input | number | string;
 
 /**
  * @examples
@@ -35,9 +36,10 @@ export type Operand = Variable | Input | number | string;
  */
 export type Expression =
   | [Operand, ComparisonOperator, Operand]
-  | [Variable | Input, PresenceOperator];
+  | [VariableName | Input, PresenceOperator];
 
-export type ControlFlowNode = BaseNode & {
+export type ControlNode = BaseNode & {
+  kind: "control";
   switch: (
     | {
         case: Expression;
@@ -49,10 +51,11 @@ export type ControlFlowNode = BaseNode & {
   )[];
 };
 
-export type WorkflowNode = TaskNode | ControlFlowNode;
+export type WorkflowNode = TaskNode | ControlNode;
 
 export type WorkflowJson = {
+  version: number;
   name: string;
   nodes: WorkflowNode[];
-  variables?: Record<string, WorkflowVariable>;
+  variables?: Record<VariableName, VariableValue>;
 };
