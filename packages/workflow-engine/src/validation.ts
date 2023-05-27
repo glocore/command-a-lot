@@ -1,6 +1,6 @@
 import Ajv, { Schema, ValidateFunction } from "ajv";
 
-const ajv = new Ajv({ allErrors: true });
+const ajv = new Ajv({ allErrors: true, strictTuples: true });
 
 export const taskNodeSchema: Schema = {
   type: "object",
@@ -13,6 +13,46 @@ export const taskNodeSchema: Schema = {
     args: { type: "object", nullable: true },
     next: { type: "string", nullable: true },
   },
+};
+
+export const operandSchema: Schema = {
+  oneOf: [{ type: "number" }, { type: "string" }],
+};
+
+export const operatorSchema: Schema = {
+  oneOf: [
+    { const: ">" },
+    { const: "<" },
+    { const: "==" },
+    { const: "!=" },
+    { const: "<=" },
+    { const: ">=" },
+  ],
+};
+
+export const expressionSchema: Schema = {
+  oneOf: [
+    // Comparison operation
+    {
+      type: "array",
+      minItems: 3,
+      additionalItems: false,
+      items: [operandSchema, operatorSchema, operandSchema],
+    },
+
+    // Presence operation
+    {
+      type: "array",
+      minItems: 2,
+      additionalItems: false,
+      items: [
+        {
+          oneOf: [{ const: "@input" }, { type: "string", pattern: "^\\$.*$" }],
+        },
+        { oneOf: [{ const: "@absent" }, { const: "@present" }] },
+      ],
+    },
+  ],
 };
 
 export const controlNodeSchema: Schema = {
@@ -33,10 +73,7 @@ export const controlNodeSchema: Schema = {
             type: "object",
             required: ["case", "goto"],
             properties: {
-              case: {
-                type: "array",
-                items: { type: ["string", "number"] },
-              },
+              case: expressionSchema,
               goto: { type: "string" },
             },
           },

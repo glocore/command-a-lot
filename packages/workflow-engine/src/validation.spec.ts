@@ -3,6 +3,7 @@ import {
   controlNodeSchema,
   taskNodeSchema,
   validate,
+  variablesSchema,
   workflowValidator,
 } from "./validation";
 import { ControlNode, TaskNode, WorkflowJson } from "./types";
@@ -84,22 +85,55 @@ describe("controlNodeSchema", () => {
     expect(valid).toBe(false);
   });
 
-  // it("flags an invalid switch expression", () => {
-  //   const controlNode = {
-  //     kind: "control",
-  //     id: "1",
-  //     name: "1",
-  //     switch: [{ case: ["invalid", "@present"], goto: "2" }, { default: "2" }],
-  //   };
+  it.each([
+    { case: ["invalid", "@present"] },
+    { case: [2, "@absent"] },
+    { case: [2, ">"] },
+    { case: ["$my_var", ">"] },
+  ])("flags an invalid switch expression: $case", (c) => {
+    const controlNode = {
+      kind: "control",
+      id: "1",
+      name: "1",
+      switch: [{ case: c.case, goto: "2" }, { default: "2" }],
+    };
 
-  //   const { valid, errors } = validate(controlNode, validator);
+    const { valid, errors } = validate(controlNode, validator);
 
-  //   expect(errors).toBeTruthy();
-  //   expect(valid).toBe(false);
-  // });
+    expect(errors).toBeTruthy();
+    expect(valid).toBe(false);
+  });
 });
 
-describe("validate", () => {
+describe("variablesSchema", () => {
+  const validator = ajv.compile(variablesSchema);
+
+  it("validates a valid variables object", () => {
+    const variables = {
+      $my_var: 2,
+      $my_other_var: 3,
+    };
+
+    const { valid, errors } = validate(variables, validator);
+
+    expect(errors).toBeFalsy();
+    expect(valid).toBe(true);
+  });
+
+  it("flags if a variable name doesn't start with $", () => {
+    const variables = {
+      $valid: 2,
+      invalid: 3,
+    };
+
+    const { valid, errors } = validate(variables, validator);
+
+    expect(errors).toBeTruthy();
+    expect(valid).toBe(false);
+  });
+});
+
+describe("workflowValidator", () => {
   it("validates a simple workflow", () => {
     const workflowJson: WorkflowJson = {
       version: 1.0,
